@@ -21,7 +21,7 @@ _base_default = {
     "axes.titlesize": 14,
     "axes.labelsize": 12,
 
-    "scatter.marker": "s",
+    "scatter.marker": "o",
 
     "figure.dpi": 100,
 
@@ -41,6 +41,7 @@ _base_poster = {
     "xtick.labelsize": 14,         # Readable tick numbers
     "ytick.labelsize": 14,
     "legend.fontsize": 14,
+    "scatter.marker": "o",
     
     "lines.linewidth": 4.5,              # Thicker lines for projector visibility
     "lines.solid_capstyle": "round",
