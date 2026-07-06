@@ -67,7 +67,7 @@ for theme in viztheme.themes.keys():
         plt.close(fig)
         
         # Inject into HTML
-        card_class = "card card-dark" if theme == "dark" else "card"
+        card_class = "card card-dark" if "dark" in theme else "card"
         html += f"""
         <div class="{card_class}">
             <h2>{theme} + {palette}</h2>
