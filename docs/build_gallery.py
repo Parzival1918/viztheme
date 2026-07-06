@@ -1,3 +1,5 @@
+import viztheme
+import viztheme
 from pathlib import Path
 import shutil
 import matplotlib.pyplot as plt
@@ -41,12 +43,8 @@ y1 = np.sin(x)
 y2 = np.cos(x)
 y3 = np.sin(x + np.pi*3 / 4)
 
-# 4. Loop through themes and palettes
-themes = ["light", "dark"]
-palettes = ["pastel", "okabe_ito", "purple_yellow", "neon", "grayscale"]
-
-for theme in themes:
-    for palette in palettes:
+for theme in viztheme.themes.keys():
+    for palette in viztheme.palettes.keys():
         print(f"Generating {theme} - {palette}...")
         
         # Apply the style
@@ -66,12 +64,13 @@ for theme in themes:
         filename = f"{theme}_{palette}.svg"
         filepath = images_dir / filename
         plt.savefig(filepath, format="svg", bbox_inches="tight")
+        plt.close(fig)
         
         # Inject into HTML
         card_class = "card card-dark" if theme == "dark" else "card"
         html += f"""
         <div class="{card_class}">
-            <h2>{theme.title()} + {palette.title()}</h2>
+            <h2>{theme} + {palette}</h2>
             <img src="images/{filename}" alt="{theme} {palette} plot">
         </div>
         """
