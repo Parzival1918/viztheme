@@ -11,7 +11,9 @@ jobs:
   build_docs:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write  # To push a branch 
+      pages: write  # To push to a GitHub Pages site
+      id-token: write # To update the deployment status
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -23,8 +25,11 @@ jobs:
       - name: Generate gallery
         run: pixi run -e docs python docs/build_gallery.py
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs
+          path: 'docs'
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
