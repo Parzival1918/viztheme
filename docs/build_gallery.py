@@ -54,9 +54,9 @@ for theme in themes:
         
         # Create the plot
         fig, ax = plt.subplots(figsize=(8, 5))
-        ax.plot(x, y1, label="$\sin(x)$")
-        ax.plot(x, y2, label="$\cos(x)$")
-        ax.plot(x, y3, label="$\sin(x + \pi/4)$")
+        ax.plot(x, y1, label=r"$\sin(x)$")
+        ax.plot(x, y2, label=r"$\cos(x)$")
+        ax.plot(x, y3, label=r"$\sin(x + \pi/4)$")
         ax.set_title("Title")
         ax.set_xlabel("x-axis")
         ax.set_ylabel("y-axis")
@@ -64,7 +64,8 @@ for theme in themes:
         
         # Save as SVG for crisp web rendering
         filename = f"{theme}_{palette}.svg"
-        plt.savefig(f"images/{filename}", format="svg", bbox_inches="tight")
+        filepath = images_dir / filename
+        plt.savefig(filepath, format="svg", bbox_inches="tight")
         
         # Inject into HTML
         card_class = "card card-dark" if theme == "dark" else "card"
@@ -82,7 +83,7 @@ html += """
 </html>
 """
 
-with open("index.html", "w") as f:
+with open(Path(__file__).parent / "index.html", "w") as f:
     f.write(html)
 
 print("Gallery built successfully!")

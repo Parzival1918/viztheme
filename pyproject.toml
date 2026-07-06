@@ -25,3 +25,7 @@ platforms = ["osx-arm64", "linux-64"]
 viztheme = { path = ".", editable = true }
 
 [tool.pixi.tasks]
+
+[tool.pixi.environments]
+default = {features = [], solve-group = "default"}
+docs = {features = ["docs"], solve-group = "default"}
