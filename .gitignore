@@ -1,0 +1,12 @@
+# pixi environments
+.pixi/*
+!.pixi/config.toml
+
+# build outputs
+docs/images/*
+docs/index.html
+
+# Python
+__pycache__
+.venv
+.DS_Store
