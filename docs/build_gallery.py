@@ -1,10 +1,11 @@
 import viztheme
-import viztheme
+import viztheme.tweaks
 from pathlib import Path
 import shutil
 import matplotlib.pyplot as plt
 import numpy as np
-import viztheme
+import inspect
+
 
 # 1. Prepare the output directories, delete output image dir first
 images_dir = Path(__file__).parent / "images"
@@ -156,20 +157,37 @@ for theme in viztheme.themes.keys():
 
 html += """
     </div>
+"""
+
+tweaks_html = """
     <div class="docs-section">
         <h2>🛠️ Available Tweaks</h2>
         <p>Beyond global styles, <code>viztheme</code> provides these helper functions to elevate your plot aesthetics in the <code>tweaks</code> module.</p>
+"""
+
+# Dynamically get tweak functions
+tweak_funcs = [f for name, f in inspect.getmembers(viztheme.tweaks, inspect.isfunction) if not name.startswith('_')]
+
+for i, func in enumerate(tweak_funcs, 1):
+    name = func.__name__
+    title = name.replace('_', ' ').title()
+    sig = inspect.signature(func)
+    doc = inspect.getdoc(func) or "No description available."
+    
+    tweaks_html += f"""
         <div class="tweak-block">
-            <h3>1. Rounded Bounding Box</h3>
-            <p><code>add_rounded_box(ax)</code></p>
-            <p>Removes the sharp default Matplotlib spines and wraps your plot in a sleek, app-like rounded background panel.</p>
+            <h3>{i}. {title}</h3>
+            <p><code>{name}{sig}</code></p>
+            <p>{doc}</p>
         </div>
-        <div class="tweak-block">
-            <h3>2. Editorial Formatting</h3>
-            <p><code>format_editorial(ax, title, subtitle)</code></p>
-            <p>Replaces the standard centered title with a left-aligned, bold headline and a subdued subtitle.</p>
-        </div>
+"""
+
+tweaks_html += """
     </div>
+"""
+
+html += tweaks_html
+html += """
     <script>
     function openTheme(evt, themeName) {
         var i, tabcontent, tablinks;
