@@ -10,3 +10,7 @@ docs/index.html
 __pycache__
 .venv
 .DS_Store
+
+tests.py
+test.png
+test.svg

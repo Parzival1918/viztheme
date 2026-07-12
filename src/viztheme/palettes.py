@@ -1,4 +1,6 @@
 from matplotlib import cycler
+from matplotlib.colors import LinearSegmentedColormap
+import matplotlib.pyplot as plt
 
 
 palettes = {
@@ -9,6 +11,25 @@ palettes = {
     "neon": cycler("color", ["#00E5FF", "#FF4081", "#FFEA00", "#1DE9B6", "#BB86FC", "#FF6E40"]),
     "grayscale": cycler("color", ["#000000", "#666666", "#252525", "#737373", "#969696", "#BDBDBD", "#D9D9D9"]) 
 }
+
+colorblind_safe_palettes = ["okabe_ito", "grayscale"]
+
+def get_palettes(colorblind_safe=False):
+    if colorblind_safe:
+        return {k: v for k, v in palettes.items() if k in colorblind_safe_palettes}
+    return palettes
+
+continuous_colormaps = {
+    "viztheme_seq_blue": LinearSegmentedColormap.from_list("viztheme_seq_blue", ["#EAF4FF", "#005ABB", "#002855"]),
+    "viztheme_seq_orange": LinearSegmentedColormap.from_list("viztheme_seq_orange", ["#FFF1E5", "#FF9B42", "#A84A00"]),
+    "viztheme_div_orange_blue": LinearSegmentedColormap.from_list("viztheme_div_orange_blue", ["#E36900", "#F8F9FA", "#005ABB"]),
+    "viztheme_div_purple_yellow": LinearSegmentedColormap.from_list("viztheme_div_purple_yellow", ["#5D3A9B", "#F8F9FA", "#E6C229"])
+}
+
+def register_colormaps():
+    for name, cmap in continuous_colormaps.items():
+        if name not in plt.colormaps():
+            plt.colormaps.register(cmap=cmap, name=name)
 
 
 def _linspace(start, stop, n):
